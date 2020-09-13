@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h2>Shoes list</h2>
+    <ul>
+        {% for shoes in shoesList  %}
+            <li>
+                <article>
+                    <a href='#' style="display: block;">
+                        <h3>{{ shoes.brand }} {{shoes.model}}</h3>
+                        <small>{{ shoes.cost }}</small>
+                    </a>
+                </article>
+            </li>
+        {% endfor %}
+    </ul>
+
+    {% if previous >= 0 %}
+        <a href="{{ path('app_shoes_list', { offset: previous }) }}">Previous</a>
+    {% endif %}
+
+    {% if next < shoesList|length %}
+        <a href="{{ path('app_shoes_list', { offset: next }) }}">Next</a>
+    {% endif %}
+{% endblock %}

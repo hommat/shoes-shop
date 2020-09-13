@@ -44,6 +44,16 @@ class Shoes
      */
     private $slug;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+    }
+
     public function computeSlug(SluggerInterface $slugger)
     {
         $this->slug = $slugger->slug($this->getBrand() . ' ' . $this->getModel())->lower();
@@ -112,5 +122,10 @@ class Shoes
         $this->slug = $slug;
 
         return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
     }
 }
