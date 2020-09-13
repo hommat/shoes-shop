@@ -6,7 +6,7 @@
         {% for shoes in shoesList  %}
             <li>
                 <article>
-                    <a href='#' style="display: block;">
+                    <a href='{{ path('app_shoes_single', { slug: shoes.slug }) }}' style="display: block;">
                         <h3>{{ shoes.brand }} {{shoes.model}}</h3>
                         <small>{{ shoes.cost }}</small>
                     </a>
