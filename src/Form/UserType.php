@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\User;
+use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType;
+use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrue as RecaptchaTrue;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -11,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+
 
 class UserType extends AbstractType
 {
@@ -31,6 +34,10 @@ class UserType extends AbstractType
             ->add('termsAccepted', CheckboxType::class, [
                 'label' => 'I accept terms of use',
                 'required' => true
+            ])
+            ->add('recaptcha', EWZRecaptchaType::class, [
+                'mapped' => false,
+                'constraints' => [new RecaptchaTrue()]
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Create account'
