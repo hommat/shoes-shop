@@ -4,9 +4,11 @@ namespace App\Entity;
 
 use App\Repository\ShoesRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 /**
  * @ORM\Entity(repositoryClass=ShoesRepository::class)
+ * @ORM\EntityListeners({"App\EntityListener\ShoesEntityListener"})
  */
 class Shoes
 {
@@ -36,6 +38,16 @@ class Shoes
      * @ORM\Column(type="string", length=255)
      */
     private $model;
+
+    /**
+     * @ORM\Column(type="string", length=255, unique=true)
+     */
+    private $slug;
+
+    public function computeSlug(SluggerInterface $slugger)
+    {
+        $this->slug = $slugger->slug($this->getBrand() . ' ' . $this->getModel())->lower();
+    }
 
     public function getId(): ?int
     {
@@ -86,6 +98,18 @@ class Shoes
     public function setModel(string $model): self
     {
         $this->model = $model;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }
